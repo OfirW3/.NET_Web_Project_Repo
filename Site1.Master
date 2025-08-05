@@ -1,0 +1,133 @@
+﻿<%@ Master Language="C#" AutoEventWireup="true" CodeBehind="Site1.master.cs" Inherits="ProjectNew.Site1" %>
+
+<!DOCTYPE html>
+
+<html>
+<head runat="server">
+    <title>Ofir's Project</title>
+    <asp:ContentPlaceHolder ID="head" runat="server">
+    </asp:ContentPlaceHolder>
+     <style>
+ body {
+            font-family: Arial, sans-serif;
+            background-color: deepskyblue;
+        }
+
+        /* Navigation Bar Styling */
+        nav {
+            background-color: #085bcf;
+            text-align: center;
+            padding: 10px 0;
+        }
+
+        nav ul {
+            list-style-type: none;
+            margin: 0;
+            padding: 0;
+        }
+
+        nav ul li {
+            display: inline;
+            margin-right: 20px;
+
+        }
+
+        nav ul li a {
+            text-decoration: none;
+            color: #fff;
+            font-size: 14px;
+            font-weight: bold;
+        }
+
+        nav ul li a:hover {
+            color: #c5d9f1;
+        }
+
+        /* Banner Styling */
+        #banner {
+            background-color: #45458F;
+            text-align: center;
+            padding: 20px 0;
+            margin-bottom: 20px;
+        }
+
+        #banner img {
+            max-width: 100%;
+            height: auto;
+        }
+
+        /* Content Container */
+        #content {
+            width: 960px;
+            margin: 0 auto;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div style="width:960px; margin: 2px auto;">
+  
+      
+          
+
+
+          <div style="float:right; height:100px; width:198px;margin-left:2px;background-color:#085bcf;"></div>
+       
+
+          <div style ="float:right; height:100px; width:760px; Background-color:#45458F">
+ <img src="Images/Banner2.png" alt="Banner "width="760" height="100"></div>
+      <div style ="float:right; height:600px; width:200px;"></div>
+ <div style ="float:right; height:600px; width:610px">
+     <nav>
+    <ul>
+  <li><a href="Lavnon.aspx">Home</a></li>
+        
+
+                      
+  <li><a href="TevaGallery.aspx">Nature Gallery</a></li>
+  <li><a href="JSGallery.aspx">JavaScript Gallery</a></li>
+                      
+        <%
+
+
+
+            if (Session["username"] != null || Session["category"] == "admin")
+            {
+
+                Response.Write("<li><a href=\"Logout.aspx\">Logout</a></li>");
+                Response.Write("<li><a href=\"UserPage.aspx\">Update Details</a></li>");
+            }
+            else
+            {
+                Response.Write("<li><a href=Login.aspx>Login</a></li>");
+                Response.Write("<li><a href=Registraiton.aspx>Registraiton</a></li>");
+            }
+            if (Session["category"] == "admin")
+            {
+                Response.Write("<li><a href=AdminPage.aspx>Admin Page</a></li>");
+                Response.Write("<br> Hello, Admin");
+            }
+            else if (Session["username"] != null)
+            {
+                Response.Write("Hello, " + Session["username"]);
+            }
+
+            else
+            {
+                Response.Write("Hello, guest");
+            }
+    %>
+</ul>
+         </nav>
+
+
+    <form id="form1" runat="server">
+        <div>
+            <asp:ContentPlaceHolder ID="ContentPlaceHolder1" runat="server"> 
+            </asp:ContentPlaceHolder>
+        </div>
+    </form>
+</body>
+</html>

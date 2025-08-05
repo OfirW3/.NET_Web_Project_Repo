@@ -1,0 +1,163 @@
+﻿<%@ Master Language="C#" AutoEventWireup="true" CodeBehind="Site1.master.cs" Inherits="ProjectNew.Site1" %>
+
+<!DOCTYPE html>
+
+<html>
+<head runat="server">
+    <title>Ofir's Project</title>
+    <asp:ContentPlaceHolder ID="head" runat="server">
+    </asp:ContentPlaceHolder>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: deepskyblue;
+        }
+
+        /* Banner and Navigation Container */
+        .banner-nav-container {
+            width: 960px;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        /* Banner Styling */
+        #banner {
+            margin: 0;
+            padding: 0; /* Ensure no padding around the banner */
+        }
+
+            #banner img {
+                width: 960px; /* Make the banner width match the container */
+                height: 100px; /* Keep the original height */
+                display: block; /* Ensure no extra space around the image */
+
+            }
+
+        /* Navigation Bar Styling */
+        nav {
+            background-color: #085bcf;
+            padding: 0; /* Remove padding */
+            margin: 0; /* Ensure no margin around the navigation bar */
+        }
+
+            nav ul {
+                list-style-type: none;
+                margin: 0;
+                padding: 10px 0;
+                display: inline-block;
+            }
+
+                nav ul li {
+                    display: inline;
+                    margin-right: 15px;
+                }
+
+                    nav ul li a {
+                        text-decoration: none;
+                        color: #fff;
+                        font-size: 16px;
+                        font-weight: bold;
+                    }
+
+                        nav ul li a:hover {
+                            color: #c5d9f1;
+                        }
+
+        /* Content Container */
+        #content {
+            width: 960px;
+            margin: 20px auto;
+            padding: 20px;
+            border-radius: 10px;
+        }
+
+        .clock-container {
+            position: absolute;
+            top: 0px;
+            left: 5px;
+            text-align: left;
+            font-size: 2rem;
+            font-weight: bold;
+            margin-top: 20px;
+        }
+
+        .hello-message {
+            font-size: 16px;
+        }
+    </style>
+    <script>
+        (function () {
+            var script = document.createElement("script");
+            script.src = "https://bringthemhomenow.net/1.1.0/hostages-ticker.js";
+            script.setAttribute(
+                "integrity",
+                "sha384-DHuakkmS4DXvIW79Ttuqjvl95NepBRwfVGx6bmqBJVVwqsosq8hROrydHItKdsne"
+            );
+
+            script.setAttribute("crossorigin", "anonymous");
+            document.getElementsByTagName("head")[0].appendChild(script);
+        })();
+    </script>
+</head>
+<body>
+    <div class="banner-nav-container">
+        <div id="banner">
+            <img src="Images/Banner2.png" alt="Banner">
+        </div>
+        <nav>
+            <ul>
+                <li><a href="Lavnon.aspx">Home</a></li>
+                <li><a href="About.aspx">About Me</a></li>
+
+                <li><a href="TevaGallery.aspx">Nature Gallery</a></li>
+                <% if (Session["username"] != null)
+                    {
+                        Response.Write("<li><a href=\"Logout.aspx\">Logout</a></li>");
+                        Response.Write("<li><a href=\"UserPage.aspx\">Update Details</a></li>");
+                        Response.Write("<li><a href=\"WordGame.aspx\">Hang Man Game!!</a></li>");
+                        Response.Write("<li><a href=\"TikTakToe.aspx\">Tic Tac Toe!!!</a></li>");
+                        Response.Write("<li class='hello-message'></br>Hello, " + Session["username"] + "</li>");
+                    }
+                    else if (Session["category"] == "admin")
+                    {
+                        Response.Write("<li><a href=\"AdminPage.aspx\">Admin Page</a></li>");
+                        Response.Write("<li><a href=\"Logout.aspx\">Logout</a></li>");
+                        Response.Write("<li><a href=\"WordGame.aspx\">Hang Man Game!!</a></li>");
+                        Response.Write("<li><a href=\"TikTakToe.aspx\">Tic Tac Toe!!!</a></li>");
+                        Response.Write("<li class='hello-message'></br>Hello, Admin</li>");
+                    }
+                    else
+                    {
+                        Response.Write("<li><a href=\"Login.aspx\">Login</a></li>");
+                        Response.Write("<li><a href=\"Registraiton.aspx\">Registration</a></li>");
+                        Response.Write("<li class='hello-message'></br>Hello, guest</li>");
+                    }
+                    Response.Write("<li>Number of online people: " + Application["Singedin"] + "</li>");
+                %>
+            </ul>
+        </nav>
+    </div>
+    <div id="content">
+        <form id="form1" runat="server">
+            <div class="clock-container" id="clock"></div>
+            <asp:ContentPlaceHolder ID="ContentPlaceHolder1" runat="server"></asp:ContentPlaceHolder>
+        </form>
+    </div>
+    <script>
+        function updateTime() {
+            var now = new Date();
+            var hours = now.getHours().toString().padStart(2, '0');
+            var minutes = now.getMinutes().toString().padStart(2, '0');
+            var seconds = now.getSeconds().toString().padStart(2, '0');
+            document.getElementById('clock').innerText = hours + ':' + minutes + ':' + seconds;
+        }
+
+        // Update time every second
+        setInterval(updateTime, 1000);
+
+        // Initial call to display the time
+        updateTime();
+    </script>
+    <div id="bthn" lang="en"></div>
+</body>
+</html>
